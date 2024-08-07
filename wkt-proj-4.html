@@ -185,1412 +185,246 @@
 
     <div class="container">
 
-      <h1 id="cf-16--wktproj4-translation">CF-1.6 &lt;–&gt; WKT/PROJ.4 translation</h1>
-
+      <h1 id="cf-16-lt--gt-wktproj4-translation">CF-1.6 &lt;--&gt; WKT/PROJ.4 translation</h1>
 <h2 id="mapping-from-cf-grid-mapping-attributes-to-crs-wkt-elements">Mapping from CF Grid Mapping Attributes to CRS WKT Elements</h2>
-
 <p>These <strong>provisional</strong> mappings have been compiled to support, among other things, CF proposals <a href="https://cfconventions.org/Data/Trac-tickets/69.html">69</a> and <a href="https://cfconventions.org/Data/Trac-tickets/80.html">80</a>; which have been incorporated in the CF Conventions document version 1.7.
 If you spot any errors or omissions, please email the authors (Phil Bentley and Etienne Tourigny) or the CF mailing list, or else update this wiki page.</p>
-
 <p>In Tables 1 and 2 the names of WKT PARAMETER elements follow the names of coordinate operation parameters
 defined in the <a href="https://epsg.org">EPSG geodetic parameter registry</a>.</p>
-
 <p>The following tables list translations of projection parameter names between CF and various other representations (such as OGC WKT, EPSG and PROJ.4).
 The information was obtained from various sources.</p>
-
 <p>The various representations listed are:</p>
-
 <ul>
-  <li><strong>CF</strong> The CF-1.6 (and possibly CF-1.7) parameter names</li>
-  <li><strong>OGC WKT</strong> The names following OGC WKT specification (used by GDAL/OGR and CadCorp(?))</li>
-  <li><strong>PROJ.4</strong> The names used in the PROJ.4 software (https://proj.org)</li>
-  <li><strong>EPSG</strong> The names and codes used in the EPSG Geodetic Parameter Dataset (https://epsg.org)</li>
-  <li><strong>GeoTIFF ID</strong> The names used in the GeoTIFF raster format (https://trac.osgeo.org/geotiff)</li>
+<li><strong>CF</strong> The CF-1.6 (and possibly CF-1.7) parameter names</li>
+<li><strong>OGC WKT</strong> The names following OGC WKT specification (used by GDAL/OGR and CadCorp(?))</li>
+<li><strong>PROJ.4</strong> The names used in the PROJ.4 software (<a href="https://proj.org">https://proj.org</a>)</li>
+<li><strong>EPSG</strong> The names and codes used in the EPSG Geodetic Parameter Dataset (<a href="https://epsg.org">https://epsg.org</a>)</li>
+<li><strong>GeoTIFF ID</strong> The names used in the GeoTIFF raster format (<a href="https://trac.osgeo.org/geotiff">https://trac.osgeo.org/geotiff</a>)</li>
 </ul>
-
 <p>The following files are provided to list the various possible Datum, Ellipsoid and Prime Meridian names (in support of CF trac ticket <a href="https://cfconventions.org/Data/Trac-tickets/80.html">80</a>)</p>
-
 <ul>
-  <li>horiz_datum.csv - horizontal datum parameters for use as reference for CF-1.7 (source: GDAL/OGR, modified by Etienne Tourigny)</li>
-  <li>ellipsoid.csv - Ellipsoid parameters from the EPSG database (source: GDAL/OGR)</li>
-  <li>prime_meridian.csv - Prime Meridian parameters from the EPSG database (source: GDAL/OGR)</li>
+<li>horiz_datum.csv - horizontal datum parameters for use as reference for CF-1.7 (source: GDAL/OGR, modified by Etienne Tourigny)</li>
+<li>ellipsoid.csv - Ellipsoid parameters from the EPSG database (source: GDAL/OGR)</li>
+<li>prime_meridian.csv - Prime Meridian parameters from the EPSG database (source: GDAL/OGR)</li>
 </ul>
-
 <h3 id="table-1---existing-cf-16-cf-grid-mapping-attributes">Table 1 - Existing (CF-1.6) CF Grid Mapping Attributes</h3>
-
-<table class="table table-striped">
-  <tbody>
-    <tr>
-      <td><strong>CF Grid Mapping Attribute</strong></td>
-      <td><strong>Corresponding WKT Syntax</strong> (1)</td>
-    </tr>
-    <tr>
-      <td>earth_radius</td>
-      <td>SPHEROID[“<reference_ellipsoid_name>", <semi_major_axis>, 0.0, ...]</semi_major_axis></reference_ellipsoid_name></td>
-    </tr>
-    <tr>
-      <td>false_easting</td>
-      <td>PARAMETER[“False easting”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>false_northing</td>
-      <td>PARAMETER[“False northing”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>grid_mapping_name</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>grid_north_pole_latitude</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>grid_north_pole_longitude</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>inverse_flattening</td>
-      <td>SPHEROID[“<reference_ellipsoid_name>", <semi_major_axis>, <inverse_flattening>, ...]</inverse_flattening></semi_major_axis></reference_ellipsoid_name></td>
-    </tr>
-    <tr>
-      <td>latitude_of_projection_origin</td>
-      <td>PARAMETER[“Latitude of natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>longitude_of_central_meridian</td>
-      <td>PARAMETER[“Longitude of natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>longitude_of_prime_meridian</td>
-      <td>PRIMEM[“<prime_meridian_name>", <longitude_of_prime_meridian>, ...]</longitude_of_prime_meridian></prime_meridian_name></td>
-    </tr>
-    <tr>
-      <td>longitude_of_projection_origin</td>
-      <td>PARAMETER[“Longitude of natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>north_pole_grid_longitude</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>perspective_point_height</td>
-      <td>PARAMETER[“Viewpoint height”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>scale_factor_at_central_meridian</td>
-      <td>PARAMETER[“Scale factor at natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>scale_factor_at_projection_origin</td>
-      <td>PARAMETER[“Scale factor at natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>semi_major_axis</td>
-      <td>SPHEROID[“<reference_ellipsoid_name>", <semi_major_axis>, <inverse_flattening>, ...]</inverse_flattening></semi_major_axis></reference_ellipsoid_name></td>
-    </tr>
-    <tr>
-      <td>semi_minor_axis</td>
-      <td>no direct equivalent, the SPHEROID element is used to define ellipsoid geometry</td>
-    </tr>
-    <tr>
-      <td>standard_parallel (one parallel)</td>
-      <td>PARAMETER[“Latitude of standard parallel”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>standard_parallel (two parallels)</td>
-      <td>PARAMETER[“Latitude of 1st standard parallel”, <value>], PARAMETER["Latitude of 2nd standard parallel", <value>]</value></value></td>
-    </tr>
-    <tr>
-      <td>straight_vertical_longitude_from_pole</td>
-      <td>PARAMETER[“Longitude of origin”, <value>]</value></td>
-    </tr>
-  </tbody>
-</table>
-
+<p>| <strong>CF Grid Mapping Attribute</strong>  | <strong>Corresponding WKT Syntax</strong> (1) |
+| earth_radius  | SPHEROID[&quot;&lt;reference_ellipsoid_name&gt;&quot;, &lt;semi_major_axis&gt;, 0.0, ...]
+| false_easting  | PARAMETER[&quot;False easting&quot;, <value>]
+| false_northing  | PARAMETER[&quot;False northing&quot;, <value>]
+| grid_mapping_name  | no known equivalent
+| grid_north_pole_latitude  | no known equivalent
+| grid_north_pole_longitude  | no known equivalent
+| inverse_flattening  | SPHEROID[&quot;&lt;reference_ellipsoid_name&gt;&quot;, &lt;semi_major_axis&gt;, &lt;inverse_flattening&gt;, ...]
+| latitude_of_projection_origin  | PARAMETER[&quot;Latitude of natural origin&quot;, <value>]
+| longitude_of_central_meridian  | PARAMETER[&quot;Longitude of natural origin&quot;, <value>]
+| longitude_of_prime_meridian  | PRIMEM[&quot;&lt;prime_meridian_name&gt;&quot;, &lt;longitude_of_prime_meridian&gt;, ...]
+| longitude_of_projection_origin  | PARAMETER[&quot;Longitude of natural origin&quot;, <value>]
+| north_pole_grid_longitude  | no known equivalent
+| perspective_point_height  | PARAMETER[&quot;Viewpoint height&quot;, <value>]
+| scale_factor_at_central_meridian  | PARAMETER[&quot;Scale factor at natural origin&quot;, <value>]
+| scale_factor_at_projection_origin  | PARAMETER[&quot;Scale factor at natural origin&quot;, <value>]
+| semi_major_axis  | SPHEROID[&quot;&lt;reference_ellipsoid_name&gt;&quot;, &lt;semi_major_axis&gt;, &lt;inverse_flattening&gt;, ...]
+| semi_minor_axis  | no direct equivalent, the SPHEROID element is used to define ellipsoid geometry
+| standard_parallel (one parallel)  | PARAMETER[&quot;Latitude of standard parallel&quot;, <value>]
+| standard_parallel (two parallels)  | PARAMETER[&quot;Latitude of 1st standard parallel&quot;, <value>], PARAMETER[&quot;Latitude of 2nd standard parallel&quot;, <value>]
+| straight_vertical_longitude_from_pole  | PARAMETER[&quot;Longitude of origin&quot;, <value>]
+{: class=&quot;table table-striped&quot;}</p>
 <hr />
-
 <h3 id="table-2---future-cf-17-cf-grid-mapping-attributes">Table 2 - Future (CF-1.7) CF Grid Mapping Attributes</h3>
-
 <hr />
-
-<table class="table table-striped">
-  <tbody>
-    <tr>
-      <td><strong>CF Grid Mapping Attribute</strong></td>
-      <td><strong>Corresponding WKT Syntax</strong> (1)</td>
-      <td><strong>PROJ.4 Syntax</strong></td>
-    </tr>
-    <tr>
-      <td>projected_crs_name</td>
-      <td>PROJCS[“<projected_coordinate_system_name>", ...]</projected_coordinate_system_name></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>geographic_crs_name</td>
-      <td>GEOGCS[“<geographic_coordinate_system_name>", ...]</geographic_coordinate_system_name></td>
-      <td>N/A</td>
-    </tr>
-    <tr>
-      <td>horizontal_datum_name</td>
-      <td>GEOGCS[“<name>", DATUM["<horizontal_datum_name>", ...] ]</horizontal_datum_name></name></td>
-      <td>+datum</td>
-    </tr>
-    <tr>
-      <td>reference_ellipsoid_name</td>
-      <td>GEOGCS[“<name>", DATUM["<name>", SPHEROID["<reference_ellipsoid_name>", ...] ] ]</reference_ellipsoid_name></name></name></td>
-      <td>+ellps</td>
-    </tr>
-    <tr>
-      <td>towgs84</td>
-      <td>GEOGCS[“<name>", DATUM["<name>", TOWGS84[&lt;7 params&gt;] ]</name></name></td>
-      <td>+towgs84</td>
-    </tr>
-    <tr>
-      <td>prime_meridian_name</td>
-      <td>GEOGCS[“<name>",PRIMEM["<prime_meridian_name>",<value>]</value></prime_meridian_name></name></td>
-      <td>+ pm</td>
-    </tr>
-  </tbody>
-</table>
-
+<p>| <strong>CF Grid Mapping Attribute</strong>  | <strong>Corresponding WKT Syntax</strong> (1)  | <strong>PROJ.4 Syntax</strong> |<br />
+| projected_crs_name  | PROJCS[&quot;&lt;projected_coordinate_system_name&gt;&quot;, ...]  | N/A
+| geographic_crs_name  | GEOGCS[&quot;&lt;geographic_coordinate_system_name&gt;&quot;, ...]  | N/A
+| horizontal_datum_name  | GEOGCS[&quot;<name>&quot;, DATUM[&quot;&lt;horizontal_datum_name&gt;&quot;, ...] ]  | +datum
+| reference_ellipsoid_name  | GEOGCS[&quot;<name>&quot;, DATUM[&quot;<name>&quot;, SPHEROID[&quot;&lt;reference_ellipsoid_name&gt;&quot;, ...] ] ]  | +ellps
+| towgs84  | GEOGCS[&quot;<name>&quot;, DATUM[&quot;<name>&quot;, TOWGS84[&lt;7 params&gt;] ]  | +towgs84
+| prime_meridian_name  | GEOGCS[&quot;<name>&quot;,PRIMEM[&quot;&lt;prime_meridian_name&gt;&quot;,<value>]  | + pm
+{: class=&quot;table table-striped&quot;}</p>
 <hr />
-
 <h3 id="table-3---common-projection-parameter-names">Table 3 - Common projection parameter names</h3>
-
 <hr />
-
-<table class="table table-striped">
-  <tbody>
-    <tr>
-      <td><strong>CF</strong></td>
-      <td><strong>OGC WKT</strong></td>
-      <td><strong>PROJ.4</strong></td>
-      <td><strong>EPSG name</strong></td>
-      <td><strong>Note</strong></td>
-    </tr>
-    <tr>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting / Easting at false origin</td>
-      <td>(2)</td>
-    </tr>
-    <tr>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing / Northing at false origin</td>
-      <td>(2)</td>
-    </tr>
-    <tr>
-      <td>scale_factor_at_projection_origin</td>
-      <td>scale_factor</td>
-      <td>+k_0</td>
-      <td>Scale factor at natural origin</td>
-      <td>(1)</td>
-    </tr>
-    <tr>
-      <td>scale_factor_at_central_meridian</td>
-      <td>scale_factor</td>
-      <td>+k_0</td>
-      <td>Scale factor at natural origin</td>
-      <td>(1)</td>
-    </tr>
-    <tr>
-      <td>standard_parallel![1]</td>
-      <td>standard_parallel_1</td>
-      <td>+lat_1</td>
-      <td>Latitude of 1st standard parallel</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>standard_parallel![2]</td>
-      <td>standard_parallel_2</td>
-      <td>+lat_2</td>
-      <td>Latitude of 2nd standard parallel</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>longitude_of_central_meridian</td>
-      <td>longitude_of_center / central_meridian</td>
-      <td>+lon_0</td>
-      <td>(1)</td>
-      <td>(1)</td>
-    </tr>
-    <tr>
-      <td>longitude_of_projection_origin</td>
-      <td>longitude_of_center / central_meridian</td>
-      <td>+lon_0</td>
-      <td>(1)</td>
-      <td>(1)</td>
-    </tr>
-    <tr>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_origin / latitude_of_center</td>
-      <td>+lat_0</td>
-      <td>(1)</td>
-      <td>(1)</td>
-    </tr>
-    <tr>
-      <td>straight_vertical_longitude_from_pole</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>(1)</td>
-      <td>(1)</td>
-    </tr>
-  </tbody>
-</table>
-
+<p>|<strong>CF</strong> |<strong>OGC WKT</strong> |<strong>PROJ.4</strong> |<strong>EPSG name</strong> |<strong>Note</strong>
+|false_easting |false_easting |+x_0 |False easting / Easting at false origin |(2)
+|false_northing |false_northing |+y_0 |False northing / Northing at false origin |(2)
+|scale_factor_at_projection_origin |scale_factor |+k_0 |Scale factor at natural origin |(1)
+|scale_factor_at_central_meridian |scale_factor |+k_0 |Scale factor at natural origin |(1)
+|standard_parallel![1] |standard_parallel_1 |+lat_1 |Latitude of 1st standard parallel |
+|standard_parallel![2] |standard_parallel_2 |+lat_2 |Latitude of 2nd standard parallel |
+|longitude_of_central_meridian |longitude_of_center / central_meridian |+lon_0 |(1) |(1)
+|longitude_of_projection_origin |longitude_of_center / central_meridian |+lon_0 |(1) |(1)
+|latitude_of_projection_origin |latitude_of_origin / latitude_of_center |+lat_0 |(1) |(1)
+|straight_vertical_longitude_from_pole |central_meridian |+lon_0 |(1) |(1)
+{: class=&quot;table table-striped&quot;}</p>
 <hr />
-
 <h3 id="table-4---specific-projection-parameter-names">Table 4 - Specific projection parameter names</h3>
-
 <hr />
-
-<table class="table table-striped">
-  <tbody>
-    <tr>
-      <td><strong>Projection</strong></td>
-      <td><strong>Name</strong></td>
-      <td><strong>CF</strong></td>
-      <td><strong>OGC WKT</strong></td>
-      <td><strong>PROJ.4</strong></td>
-      <td><strong>EPSG name</strong></td>
-      <td><strong>EPSG code</strong></td>
-      <td><strong>GeoTIFF ID</strong></td>
-      <td><strong>Note</strong></td>
-    </tr>
-    <tr>
-      <td><strong>AEA</strong></td>
-      <td>Albers Equal Area</td>
-      <td>albers_conical_equal_area</td>
-      <td>Albers_Conic_Equal_Area</td>
-      <td>+proj#aea</td>
-      <td>Albers Equal Area</td>
-      <td>9822</td>
-      <td>CT_AlbersEqualArea</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel![1]</td>
-      <td>standard_parallel_1</td>
-      <td>+lat_1</td>
-      <td>Latitude of 1st standard parallel</td>
-      <td>8823</td>
-      <td>!StdParallel1</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel![2]</td>
-      <td>standard_parallel_2</td>
-      <td>+lat_2</td>
-      <td>Latitude of 2nd standard parallel</td>
-      <td>8824</td>
-      <td>!StdParallel2</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_central_meridian</td>
-      <td>longitude_of_center</td>
-      <td>+lon_0</td>
-      <td>Longitude of false origin</td>
-      <td>8822</td>
-      <td>NatOriginLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_center</td>
-      <td>+lat_0</td>
-      <td>Latitude of false origin</td>
-      <td>8821</td>
-      <td>NatOriginLat</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>Easting at false origin</td>
-      <td>8826</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>Northing at false origin</td>
-      <td>8827</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>AE</strong></td>
-      <td>Azimuthal equidistant</td>
-      <td>azimuthal_equidistant</td>
-      <td>Azimuthal_Equidistant</td>
-      <td>+proj#aeqd</td>
-      <td>N/A</td>
-      <td>N/A</td>
-      <td>CT_AzimuthalEquidistant</td>
-      <td>EPSG:9832 is ‘Modified Azimuthal Equidistant’</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_projection_origin</td>
-      <td>longitude_of_center</td>
-      <td>+lon_0 2+^</td>
-      <td> </td>
-      <td>ProjCenterLong</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_center</td>
-      <td>+lat_0 2+^</td>
-      <td> </td>
-      <td>ProjCenterLat</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td> </td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td> </td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>LAEA</strong></td>
-      <td>Lambert azimuthal equal area</td>
-      <td>lambert_azimuthal_equal_area</td>
-      <td>Lambert_Azimuthal_Equal_Area</td>
-      <td>+proj#laea</td>
-      <td>Lambert Azimuthal Equal Area</td>
-      <td>9820</td>
-      <td>CT_LambertAzimEqualArea</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_projection_origin</td>
-      <td>longitude_of_center</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8802</td>
-      <td>ProjCenterLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_center</td>
-      <td>+lat_0</td>
-      <td>Latitude of natural origin</td>
-      <td>8801</td>
-      <td>ProjCenterLat</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>LCC-1SP</strong></td>
-      <td>Lambert conformal</td>
-      <td>lambert_conformal_conic</td>
-      <td>Lambert_Conformal_Conic_1SP</td>
-      <td>+proj#lcc</td>
-      <td>Lambert Conic Conformal (1SP)</td>
-      <td>9801</td>
-      <td>CT_LambertConfConic_1SP</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_1</td>
-      <td>Latitude of natural origin</td>
-      <td>8801</td>
-      <td>NatOriginLat</td>
-      <td>standard_parallel#latitude_of_projection_origin</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_central_meridian</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8802</td>
-      <td>NatOriginLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_0</td>
-      <td>Latitude of natural origin</td>
-      <td>8801</td>
-      <td>NatOriginLat</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>N/A</td>
-      <td>scale_factor</td>
-      <td>+k_0</td>
-      <td>Scale factor at natural origin</td>
-      <td>8805</td>
-      <td>ScaleAtNatOrigin</td>
-      <td>(3) always 1</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>LCC-2SP</strong></td>
-      <td>Lambert conformal</td>
-      <td>lambert_conformal_conic</td>
-      <td>Lambert_Conformal_Conic_2SP</td>
-      <td>+proj#lcc</td>
-      <td>Lambert Conic Conformal (2SP)</td>
-      <td>9802</td>
-      <td>CT_LambertConfConic_2SP</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel![1]</td>
-      <td>standard_parallel_1</td>
-      <td>+lat_1</td>
-      <td>Latitude of 1st standard parallel</td>
-      <td>8823</td>
-      <td>!StdParallel1</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel![2]</td>
-      <td>standard_parallel_2</td>
-      <td>+lat_2</td>
-      <td>Latitude of 2nd standard parallel</td>
-      <td>8824</td>
-      <td>!StdParallel2</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_central_meridian</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of false origin</td>
-      <td>8822</td>
-      <td>FalseOriginLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_0</td>
-      <td>Latitude of false origin</td>
-      <td>8821</td>
-      <td>FalseOriginLat</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>Easting at false origin</td>
-      <td>8826</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>Northing at false origin</td>
-      <td>8827</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>CEA</strong></td>
-      <td>Lambert cylindrical equal area</td>
-      <td>lambert_cylindrical_equal_area</td>
-      <td>Cylindrical_Equal_Area</td>
-      <td>+proj#cea</td>
-      <td>N/A 2+^</td>
-      <td>CT_CylindricalEqualArea</td>
-      <td>(3) CF says EPSG 9834/9835 ?</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_central_meridian</td>
-      <td>central_meridian</td>
-      <td>+lon_0 2+^</td>
-      <td> </td>
-      <td>NatOriginLong</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel![1]</td>
-      <td>standard_parallel_1</td>
-      <td>+lat_ts</td>
-      <td> </td>
-      <td>!StdParallel1</td>
-      <td>default to 0</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td> </td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td> </td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>M-1SP</strong></td>
-      <td>Mercator (1SP)</td>
-      <td>mercator</td>
-      <td>Mercator_1SP</td>
-      <td>+proj#merc</td>
-      <td>Mercator (variant A)</td>
-      <td>9804</td>
-      <td>Mercator_1SP</td>
-      <td>(3)</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_projection_origin</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8801</td>
-      <td>NatOriginLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>scale_factor_at_projection_origin</td>
-      <td>scale_factor</td>
-      <td>+k_0</td>
-      <td>Scale factor at natural origin</td>
-      <td>8805</td>
-      <td>ScaleAtNatOrigin</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>M-2SP</strong></td>
-      <td>Mercator (2SP)</td>
-      <td>mercator</td>
-      <td>Mercator_2SP</td>
-      <td>+proj#merc</td>
-      <td>Mercator (variant B)</td>
-      <td>9805</td>
-      <td>N/A</td>
-      <td>(3)</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_projection_origin</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8801</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>standard_parallel![1]</td>
-      <td>standard_parallel_1</td>
-      <td>+lat_ts</td>
-      <td>Latitude of 1st standard parallel</td>
-      <td>8823</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>Ortho</strong></td>
-      <td>Orthographic</td>
-      <td>orthographic</td>
-      <td>Orthographic</td>
-      <td>+proj#ortho</td>
-      <td>Orthographic</td>
-      <td>9840</td>
-      <td>CT_Orthographic</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_projection_origin</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8802</td>
-      <td>ProjCenterLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_0</td>
-      <td>Latitude of natural origin</td>
-      <td>8801</td>
-      <td>ProjCenterLat</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>PS-A</strong></td>
-      <td>Polar stereographic</td>
-      <td>polar_stereographic</td>
-      <td>Polar_Stereographic</td>
-      <td>+proj#stere</td>
-      <td>Polar Stereographic (variant A)</td>
-      <td>9810</td>
-      <td>CT_PolarStereographic</td>
-      <td>(3)</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>straight_vertical_longitude_from_pole</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8802</td>
-      <td>StraightVertPoleLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>N/A</td>
-      <td>+lat_0</td>
-      <td>Latitude of natural origin</td>
-      <td>8801</td>
-      <td>NatOriginLat</td>
-      <td>+90/-90</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>scale_factor_at_projection_origin</td>
-      <td>scale_factor</td>
-      <td>+k_0</td>
-      <td>Scale factor at natural origin</td>
-      <td>8805</td>
-      <td>ScaleAtNatOrigin</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>PS-B</strong></td>
-      <td>Polar stereographic</td>
-      <td>polar_stereographic</td>
-      <td>Polar_Stereographic</td>
-      <td>+proj#stere</td>
-      <td>Polar Stereographic (variant B)</td>
-      <td>9829</td>
-      <td>N/A</td>
-      <td>(3)</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>straight_vertical_longitude_from_pole</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8802</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>N/A</td>
-      <td>+lat_0</td>
-      <td>Longitude of origin</td>
-      <td>8801</td>
-      <td>+90/-90</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>standard_parallel</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_ts</td>
-      <td>Latitude of standard parallel</td>
-      <td>8832</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>St</strong></td>
-      <td>Stereographic</td>
-      <td>stereographic</td>
-      <td>Stereographic</td>
-      <td>+proj#stere</td>
-      <td>N/A 2+^</td>
-      <td>CT_Stereographic</td>
-      <td>EPSG 9809 is “Oblique Stereographic” or “Double Stereographic”</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_projection_origin</td>
-      <td>central_meridian</td>
-      <td>+lon_0 2+^</td>
-      <td> </td>
-      <td>ProjCenterLong</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_0 2+^</td>
-      <td> </td>
-      <td>ProjCenterLat</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>scale_factor_at_projection_origin</td>
-      <td>scale_factor</td>
-      <td>+k_0 2+^</td>
-      <td> </td>
-      <td>ScaleAtNatOrigin</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td> </td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td> </td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td><strong>TM</strong></td>
-      <td>Transverse Mercator</td>
-      <td>transverse_mercator</td>
-      <td>Transverse_Mercator</td>
-      <td>+proj#tmerc</td>
-      <td>Transverse Mercator</td>
-      <td>9807</td>
-      <td>CT_TransverseMercator</td>
-      <td>(3)</td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>scale_factor_at_central_meridian</td>
-      <td>scale_factor</td>
-      <td>+k_0</td>
-      <td>Scale factor at natural origin</td>
-      <td>8805</td>
-      <td>ScaleAtNatOrigin</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>longitude_of_central_meridian</td>
-      <td>central_meridian</td>
-      <td>+lon_0</td>
-      <td>Longitude of natural origin</td>
-      <td>8802</td>
-      <td>NatOriginLong</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td> </td>
-      <td>latitude_of_projection_origin</td>
-      <td>latitude_of_origin</td>
-      <td>+lat_0</td>
-      <td>Latitude of natural origin</td>
-      <td>8801</td>
-      <td>NatOriginLat</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_easting</td>
-      <td>false_easting</td>
-      <td>+x_0</td>
-      <td>False easting</td>
-      <td>8806</td>
-      <td>FalseEasting</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td> </td>
-      <td>false_northing</td>
-      <td>false_northing</td>
-      <td>+y_0</td>
-      <td>False northing</td>
-      <td>8807</td>
-      <td>FalseNorthing</td>
-      <td> </td>
-      <td> </td>
-    </tr>
-  </tbody>
-</table>
-
+<p>|<strong>Projection</strong> |<strong>Name</strong> |<strong>CF</strong> |<strong>OGC WKT</strong> |<strong>PROJ.4</strong> |<strong>EPSG name</strong> |<strong>EPSG code</strong> |<strong>GeoTIFF ID</strong> |<strong>Note</strong>
+|<strong>AEA</strong> |Albers Equal Area |albers_conical_equal_area |Albers_Conic_Equal_Area |+proj#aea |Albers Equal Area |9822 |CT_AlbersEqualArea |
+|  |  |standard_parallel![1] |standard_parallel_1 |+lat_1 |Latitude of 1st standard parallel |8823 |!StdParallel1 |
+|  |  |standard_parallel![2] |standard_parallel_2 |+lat_2 |Latitude of 2nd standard parallel |8824 |!StdParallel2 |
+|  |  |longitude_of_central_meridian |longitude_of_center |+lon_0 |Longitude of false origin |8822 |NatOriginLong |
+|  |  |latitude_of_projection_origin |latitude_of_center |+lat_0 |Latitude of false origin |8821 |NatOriginLat |
+| |false_easting |false_easting |+x_0 |Easting at false origin |8826 |FalseEasting |
+| |false_northing |false_northing |+y_0 |Northing at false origin |8827 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>AE</strong> |Azimuthal equidistant |azimuthal_equidistant |Azimuthal_Equidistant |+proj#aeqd |N/A |N/A |CT_AzimuthalEquidistant  |EPSG:9832 is 'Modified Azimuthal Equidistant'
+|  |  |longitude_of_projection_origin |longitude_of_center |+lon_0 2+^|  |ProjCenterLong |
+|  |  |latitude_of_projection_origin |latitude_of_center |+lat_0 2+^|  |ProjCenterLat |
+| |false_easting |false_easting |+x_0 | |FalseEasting |
+| |false_northing |false_northing |+y_0 | |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>LAEA</strong> |Lambert azimuthal equal area |lambert_azimuthal_equal_area |Lambert_Azimuthal_Equal_Area |+proj#laea |Lambert Azimuthal Equal Area |9820 |CT_LambertAzimEqualArea  |
+|  |  |longitude_of_projection_origin |longitude_of_center |+lon_0 |Longitude of natural origin |8802 |ProjCenterLong |
+|  |  |latitude_of_projection_origin |latitude_of_center |+lat_0 |Latitude of natural origin |8801 |ProjCenterLat |
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>LCC-1SP</strong> |Lambert conformal |lambert_conformal_conic |Lambert_Conformal_Conic_1SP |+proj#lcc |Lambert Conic Conformal (1SP) |9801 |CT_LambertConfConic_1SP |
+|  |  |standard_parallel |latitude_of_origin |+lat_1 |Latitude of natural origin |8801 |NatOriginLat |standard_parallel#latitude_of_projection_origin
+|  |  |longitude_of_central_meridian |central_meridian |+lon_0 |Longitude of natural origin |8802 |NatOriginLong |
+|  |  |latitude_of_projection_origin |latitude_of_origin |+lat_0 |Latitude of natural origin |8801 |NatOriginLat |
+|  |  |N/A |scale_factor |+k_0 |Scale factor at natural origin |8805 |ScaleAtNatOrigin |(3) always 1
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>LCC-2SP</strong> |Lambert conformal |lambert_conformal_conic |Lambert_Conformal_Conic_2SP |+proj#lcc |Lambert Conic Conformal (2SP) |9802 |CT_LambertConfConic_2SP  |
+|  |  |standard_parallel![1] |standard_parallel_1 |+lat_1 |Latitude of 1st standard parallel |8823 |!StdParallel1 |
+|  |  |standard_parallel![2] |standard_parallel_2 |+lat_2 |Latitude of 2nd standard parallel |8824 |!StdParallel2 |
+|  |  |longitude_of_central_meridian |central_meridian |+lon_0 |Longitude of false origin |8822 |FalseOriginLong |
+|  |  |latitude_of_projection_origin |latitude_of_origin |+lat_0 |Latitude of false origin |8821 |FalseOriginLat |
+| |false_easting |false_easting |+x_0 |Easting at false origin |8826 |FalseEasting |
+| |false_northing |false_northing |+y_0 |Northing at false origin |8827 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>CEA</strong> |Lambert cylindrical equal area |lambert_cylindrical_equal_area |Cylindrical_Equal_Area |+proj#cea |N/A 2+^|CT_CylindricalEqualArea  |(3) CF says EPSG 9834/9835 ?
+|  |  |longitude_of_central_meridian |central_meridian |+lon_0 2+^|  |NatOriginLong |
+|  |  |standard_parallel![1] |standard_parallel_1 |+lat_ts | |!StdParallel1 |default to 0
+| |false_easting |false_easting |+x_0 | |FalseEasting |
+| |false_northing |false_northing |+y_0 | |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>M-1SP</strong> |Mercator (1SP) |mercator |Mercator_1SP |+proj#merc |Mercator (variant A) |9804 |Mercator_1SP |(3)
+|  |  |longitude_of_projection_origin |central_meridian |+lon_0 |Longitude of natural origin |8801 |NatOriginLong |
+|  |  |scale_factor_at_projection_origin |scale_factor |+k_0 |Scale factor at natural origin |8805 |ScaleAtNatOrigin |
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>M-2SP</strong> |Mercator (2SP) |mercator |Mercator_2SP |+proj#merc |Mercator (variant B) |9805 |N/A |(3)
+|  |  |longitude_of_projection_origin |central_meridian |+lon_0 |Longitude of natural origin |8801 | |
+|  |  |standard_parallel![1] |standard_parallel_1 |+lat_ts |Latitude of 1st standard parallel |8823 | |
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>Ortho</strong> |Orthographic |orthographic |Orthographic |+proj#ortho |Orthographic |9840 |CT_Orthographic |
+|  |  |longitude_of_projection_origin |central_meridian |+lon_0 |Longitude of natural origin |8802 |ProjCenterLong |
+|  |  |latitude_of_projection_origin |latitude_of_origin |+lat_0 |Latitude of natural origin |8801 |ProjCenterLat |
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>PS-A</strong> |Polar stereographic |polar_stereographic |Polar_Stereographic |+proj#stere |Polar Stereographic (variant A) |9810 |CT_PolarStereographic  |(3)
+|  |  |straight_vertical_longitude_from_pole   |central_meridian |+lon_0 |Longitude of natural origin |8802 |StraightVertPoleLong |
+| |latitude_of_projection_origin |N/A |+lat_0 |Latitude of natural origin |8801 |NatOriginLat |+90/-90
+|  |  |scale_factor_at_projection_origin |scale_factor |+k_0 |Scale factor at natural origin |8805 |ScaleAtNatOrigin |
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>PS-B</strong> |Polar stereographic |polar_stereographic |Polar_Stereographic |+proj#stere |Polar Stereographic (variant B) |9829 |N/A |(3)
+|  |  |straight_vertical_longitude_from_pole   |central_meridian |+lon_0 |Longitude of natural origin |8802 ||
+| |latitude_of_projection_origin |N/A |+lat_0 |Longitude of origin |8801 |+90/-90 |
+| |standard_parallel |latitude_of_origin |+lat_ts |Latitude of standard parallel |8832 ||
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>St</strong> |Stereographic |stereographic |Stereographic |+proj#stere |N/A 2+^|CT_Stereographic |EPSG 9809 is “Oblique Stereographic” or “Double Stereographic”
+|  |  |longitude_of_projection_origin |central_meridian |+lon_0 2+^|  |ProjCenterLong |
+|  |  |latitude_of_projection_origin |latitude_of_origin |+lat_0 2+^|  |ProjCenterLat |
+|  |  |scale_factor_at_projection_origin |scale_factor |+k_0 2+^|  |ScaleAtNatOrigin |
+| |false_easting |false_easting |+x_0 | |FalseEasting |
+| |false_northing |false_northing |+y_0 | |FalseNorthing |
+|  |  |  |  |  |  |  |  |
+|<strong>TM</strong> |Transverse Mercator |transverse_mercator |Transverse_Mercator |+proj#tmerc |Transverse Mercator |9807 |CT_TransverseMercator |(3)
+|  |  |scale_factor_at_central_meridian |scale_factor |+k_0 |Scale factor at natural origin |8805 |ScaleAtNatOrigin |
+|  |  |longitude_of_central_meridian |central_meridian |+lon_0 |Longitude of natural origin |8802 |NatOriginLong |
+|  |  |latitude_of_projection_origin |latitude_of_origin |+lat_0 |Latitude of natural origin |8801 |NatOriginLat |
+| |false_easting |false_easting |+x_0 |False easting |8806 |FalseEasting |
+| |false_northing |false_northing |+y_0 |False northing |8807 |FalseNorthing |
+{: class=&quot;table table-striped&quot;}</p>
 <hr />
-
-<h3 id="table-notes"><strong>Table Notes:</strong></h3>
-
+<h3 id="strongtable-notesstrong"><strong>Table Notes:</strong></h3>
 <ol>
-  <li>Multiple CF/WKT translations, see projection-specific translations.</li>
-  <li>Parameter used in every projection.</li>
-  <li>See projection-specific notes.</li>
+<li>Multiple CF/WKT translations, see projection-specific translations.</li>
+<li>Parameter used in every projection.</li>
+<li>See projection-specific notes.</li>
 </ol>
-
 <h3 id="units-information">Units Information</h3>
-
 <p>Translation of units depends on if the crs is geographic or projected.</p>
-
-<p>For a geographic crs (grid_mapping_name # “latitude_longitude”), units are angular.
+<p>For a geographic crs (grid_mapping_name # &quot;latitude_longitude&quot;), units are angular.
 GEOGCS contains a UNIT node which gives the conversion to radians.
-When the crs is in degrees the following node is used: UNIT[“degree”,0.0174532925199433].
-For a more complete description, see CT 1.0 section “7.3.19 UNIT”
-CF requires all value to be in degrees, which is specified in the dimension’s units attribute ( lon:units # “degrees_east” / lat:units # “degrees_north” ), the udunits packages allows to transform from radians.</p>
-
+When the crs is in degrees the following node is used: UNIT[&quot;degree&quot;,0.0174532925199433].
+For a more complete description, see CT 1.0 section &quot;7.3.19 UNIT&quot;
+CF requires all value to be in degrees, which is specified in the dimension's units attribute ( lon:units # &quot;degrees_east&quot; / lat:units # &quot;degrees_north&quot; ), the udunits packages allows to transform from radians.</p>
 <p>For a projected crs, units are linear.
 PROJCS must contains a UNIT node which gives the conversion into meters.
-For example, if the units are in kilometers the following node is used: UNIT[“kilometre”,1000]].
-In CF, units are given in the dimension’s units attribute (xc:units # “m”).</p>
-
+For example, if the units are in kilometers the following node is used: UNIT[&quot;kilometre&quot;,1000]].
+In CF, units are given in the dimension's units attribute (xc:units # &quot;m&quot;).</p>
 <h3 id="projection-specific-notes">Projection-specific notes</h3>
-
-<p>EPSG codes below correspond to “EPSG dataset coordinate operation method” codes.</p>
-
+<p>EPSG codes below correspond to &quot;EPSG dataset coordinate operation method&quot; codes.</p>
 <h4 id="lambert-conformal-1sp--2sp">Lambert conformal 1SP / 2SP</h4>
-
 <p>The 1SP variant corresponds to EPSG code 9801 - Lambert Conic Conformal (1SP), with CF latitude_of_projection_origin#standard_parallel and WKT scale_factor#1.
 A scale factor less than 1 means that there are 2 standard parallels, but it cannot be translated to the CF 1SP variant, therefore the 2SP variant should be used instead.
 The 2SP variant corresponds to EPSG code 9802 - Lambert Conic Conformal (2SP).</p>
-
 <h4 id="lambert-cylindrical-equal-area">Lambert cylindrical equal area</h4>
-
 <p>The scale_factor_at_projection_origin variant is not recommended as it does not translate to and from WKT/PROJ.4.
-Snyder formulas 10-2b and 10-2 can be used to relate scale_factor_at_projection_origin, standard_parallel1 and latitude_of_projection_origin but the latter is not part of this projection’s parameters.
+Snyder formulas 10-2b and 10-2 can be used to relate scale_factor_at_projection_origin, standard_parallel1 and latitude_of_projection_origin but the latter is not part of this projection's parameters.
 It has been proposed to deprecate or remove this variant from the CF spec (see CF trac ticket <a href="https://cfconventions.org/Data/Trac-tickets/75.html">75</a>).</p>
-
 <h4 id="mercator-1sp--2sp">Mercator 1SP / 2SP</h4>
-
 <p>The scale_factor_at_projection_origin variant corresponds to EPSG code 9804 - Mercator (1SP) or Mercator (variant A), and the standard_parallel variant corresponds to EPSG code 9805 - Mercator (2SP) or Mercator (variant B).</p>
-
 <h4 id="polar-stereographic">Polar stereographic</h4>
-
 <p>The standard_parallel variant corresponds to EPSG code 9829 - Polar Stereographic (Variant B), while the scale_factor_at_projection_origin variant corresponds to EPSG code 9810 - Polar Stereographic (Variant A).
 As WKT/PROJ.4 require the standard parallel, [Snyder] formula 21-7 can be used to compute it from scale_factor_at_projection_origin if that variant is used.</p>
-
 <h4 id="transverse-mercator">Transverse Mercator</h4>
-
 <p>Transverse Mercator can be translated to PROJ.4 using either +proj#tmerc (Transverse Mercator) or +proj#utm (Universal Transverse Mercator) by computing zone number from longitude_of_central_meridian.
-For example, a TM projection with longitude_of_central_meridian#-117 would have the corresponding PROJ.4 string: ‘+proj#utm +zone#11 +datum#NAD27 +units#m +no_defs ‘</p>
-
+For example, a TM projection with longitude_of_central_meridian#-117 would have the corresponding PROJ.4 string: '+proj#utm +zone#11 +datum#NAD27 +units#m +no_defs '</p>
 <h2 id="mapping-from-cf-grid-mapping-attributes-to-crs-wkt-elements-previous-table-by-phil-bentley-oct-2011">Mapping from CF Grid Mapping Attributes to CRS WKT Elements (previous table by Phil Bentley, Oct 2011)</h2>
-
 <p>These <strong>provisional</strong> mappings have been compiled to support, among other things, CF proposal <a href="http://cfconventions.org/Data/Trac-tickets/69.html">69</a>.
 If you spot any errors or omissions, please email the author or the CF mailing list, or else update this wiki page.</p>
-
-<p>Mappings are only listed for the current set of CF grid mapping attributes – there are a number of WKT elements, and many CRS PARAMETERs, for which there are no corresponding CF attributes.</p>
-
+<p>Mappings are only listed for the current set of CF grid mapping attributes -- there are a number of WKT elements, and many CRS PARAMETERs, for which there are no corresponding CF attributes.</p>
 <p>The order of attributes follows Table F.1 in the CF conventions document.</p>
-
 <p>The names of WKT PARAMETER elements follow the names of coordinate operation parameters defined in the <a href="https://epsg.org">EPSG geodetic parameter registry</a>.</p>
-
 <hr />
-
-<table class="table table-striped">
-  <tbody>
-    <tr>
-      <td><strong>CF Grid Mapping Attribute</strong></td>
-      <td><strong>Corresponding WKT Element</strong></td>
-    </tr>
-    <tr>
-      <td>earth_radius</td>
-      <td>SPHEROID[“<name>", <semi-major-axis>, 0.0, ...]</semi-major-axis></name></td>
-    </tr>
-    <tr>
-      <td>false_easting</td>
-      <td>PARAMETER[“False easting”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>false_northing</td>
-      <td>PARAMETER[“False northing”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>grid_mapping_name</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>grid_north_pole_latitude</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>grid_north_pole_longitude</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>inverse_flattening</td>
-      <td>SPHEROID[“<name>", <semi-major-axis>, <inverse-flattening>, ...]</inverse-flattening></semi-major-axis></name></td>
-    </tr>
-    <tr>
-      <td>latitude_of_projection_origin</td>
-      <td>PARAMETER[“Latitude of natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>longitude_of_central_meridian</td>
-      <td>PARAMETER[“Longitude of natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>longitude_of_prime_meridian</td>
-      <td>PRIMEM[“<name>", <longitude>, ...]</longitude></name></td>
-    </tr>
-    <tr>
-      <td>longitude_of_projection_origin</td>
-      <td>PARAMETER[“Longitude of natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>north_pole_grid_longitude</td>
-      <td>no known equivalent</td>
-    </tr>
-    <tr>
-      <td>perspective_point_height</td>
-      <td>PARAMETER[“Viewpoint height”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>scale_factor_at_central_meridian</td>
-      <td>PARAMETER[“Scale factor at natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>scale_factor_at_projection_origin</td>
-      <td>PARAMETER[“Scale factor at natural origin”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>semi_major_axis</td>
-      <td>SPHEROID[“<name>", <semi-major-axis>, <inverse-flattening>, ...]</inverse-flattening></semi-major-axis></name></td>
-    </tr>
-    <tr>
-      <td>semi_minor_axis</td>
-      <td>no direct equivalent, the SPHEROID element is used to define ellipsoid geometry</td>
-    </tr>
-    <tr>
-      <td>standard_parallel (one parallel)</td>
-      <td>PARAMETER[“Latitude of standard parallel”, <value>]</value></td>
-    </tr>
-    <tr>
-      <td>standard_parallel (two parallels)</td>
-      <td>PARAMETER[“Latitude of 1st standard parallel”, <value>], PARAMETER["Latitude of 2nd standard parallel", <value>]</value></value></td>
-    </tr>
-    <tr>
-      <td>straight_vertical_longitude_from_pole</td>
-      <td>PARAMETER[“Longitude of origin”, <value>]</value></td>
-    </tr>
-  </tbody>
-</table>
-
+<p>| <strong>CF Grid Mapping Attribute</strong>  | <strong>Corresponding WKT Element</strong> |
+| earth_radius  | SPHEROID[&quot;<name>&quot;, <semi-major-axis>, 0.0, ...]
+| false_easting  | PARAMETER[&quot;False easting&quot;, <value>]
+| false_northing  | PARAMETER[&quot;False northing&quot;, <value>]
+| grid_mapping_name  | no known equivalent
+| grid_north_pole_latitude  | no known equivalent
+| grid_north_pole_longitude  | no known equivalent
+| inverse_flattening  | SPHEROID[&quot;<name>&quot;, <semi-major-axis>, <inverse-flattening>, ...]
+| latitude_of_projection_origin  | PARAMETER[&quot;Latitude of natural origin&quot;, <value>]
+| longitude_of_central_meridian  | PARAMETER[&quot;Longitude of natural origin&quot;, <value>]
+| longitude_of_prime_meridian  | PRIMEM[&quot;<name>&quot;, <longitude>, ...]
+| longitude_of_projection_origin  | PARAMETER[&quot;Longitude of natural origin&quot;, <value>]
+| north_pole_grid_longitude  | no known equivalent
+| perspective_point_height  | PARAMETER[&quot;Viewpoint height&quot;, <value>]
+| scale_factor_at_central_meridian  | PARAMETER[&quot;Scale factor at natural origin&quot;, <value>]
+| scale_factor_at_projection_origin  | PARAMETER[&quot;Scale factor at natural origin&quot;, <value>]
+| semi_major_axis  | SPHEROID[&quot;<name>&quot;, <semi-major-axis>, <inverse-flattening>, ...]
+| semi_minor_axis  | no direct equivalent, the SPHEROID element is used to define ellipsoid geometry
+| standard_parallel (one parallel)  | PARAMETER[&quot;Latitude of standard parallel&quot;, <value>]
+| standard_parallel (two parallels)  | PARAMETER[&quot;Latitude of 1st standard parallel&quot;, <value>], PARAMETER[&quot;Latitude of 2nd standard parallel&quot;, <value>]
+| straight_vertical_longitude_from_pole  | PARAMETER[&quot;Longitude of origin&quot;, <value>]
+{: class=&quot;table table-striped&quot;}</p>
 <hr />
-
 <h3 id="attachments-3-work-in-progress">Attachments (3) (work in progress)</h3>
-
 <ul>
-  <li>/trac/attachment/wiki/Cf2CrsWkt/horiz_datum.csv[horiz_datum.csv]/trac/raw-attachment/wiki/Cf2CrsWkt/horiz_datum.csv[​]
-   (43.2 KB) -
-            “horizontal datum parameters for use as reference for CF-1.7”</li>
-  <li>/trac/attachment/wiki/Cf2CrsWkt/ellipsoid.csv[ellipsoid.csv]/trac/raw-attachment/wiki/Cf2CrsWkt/ellipsoid.csv[​]
-   (13.5 KB) -
-             “Ellipsoid parameters from the EPSG database (source: GDAL/OGR)”</li>
-  <li>/trac/attachment/wiki/Cf2CrsWkt/prime_meridian.csv[prime_meridian.csv]/trac/raw-attachment/wiki/Cf2CrsWkt/prime_meridian.csv[​]
-   (1.6 KB) -
-            “Prime Meridian parameters from the EPSG database (source: GDAL/OGR)”</li>
+<li>/trac/attachment/wiki/Cf2CrsWkt/horiz_datum.csv[horiz_datum.csv]/trac/raw-attachment/wiki/Cf2CrsWkt/horiz_datum.csv[​]
+(43.2 KB) -
+&quot;horizontal datum parameters for use as reference for CF-1.7&quot;</li>
+<li>/trac/attachment/wiki/Cf2CrsWkt/ellipsoid.csv[ellipsoid.csv]/trac/raw-attachment/wiki/Cf2CrsWkt/ellipsoid.csv[​]
+(13.5 KB) -
+&quot;Ellipsoid parameters from the EPSG database (source: GDAL/OGR)&quot;</li>
+<li>/trac/attachment/wiki/Cf2CrsWkt/prime_meridian.csv[prime_meridian.csv]/trac/raw-attachment/wiki/Cf2CrsWkt/prime_meridian.csv[​]
+(1.6 KB) -
+&quot;Prime Meridian parameters from the EPSG database (source: GDAL/OGR)&quot;</li>
 </ul>
 
 
