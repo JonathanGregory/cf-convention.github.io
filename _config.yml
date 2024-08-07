@@ -3,7 +3,7 @@ description: CF Conventions
 url: https://jonathangregory.github.io/cf-convention.github.io
 repository: JonathanGregory/cf-convention.github.io
 
-markdown: GFM
+markdown: kramdown
 
 defaults:
   -
