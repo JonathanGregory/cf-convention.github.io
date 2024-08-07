@@ -1,9 +1,9 @@
 title: CF Conventions
 description: CF Conventions
-url: https://cfconventions.org
-repository: cf-convention/cf-convention.github.io
+url: https://jonathangregory.github.io/cf-convention.github.io
+repository: JonathanGregory/cf-convention.github.io
 
-markdown: kramdown
+markdown: GFM
 
 defaults:
   -
