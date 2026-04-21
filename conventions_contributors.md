@@ -34,6 +34,7 @@ The affiliations are those that the contributors used at the time of their contr
 - Lorenzo Corgnati, CNR-ISMAR
 - Ethan Davis, Unidata
 - Cecelia DeLuca, NOAA
+- Mathieu Deslandes, Météo-France
 - Martin Desruisseaux, Geomatys
 - Francisco Doblas-Reyes, ECMWF
 - Bob Drach, PCMDI, LLNL
