@@ -105,6 +105,8 @@ group: "navigation"
   </div>
 
   <div class="col-md-6">
+  
+    <h2><a href="https://github.com/cf-convention/cf-conventions/blob/main/CONTRIBUTING.md">Rules and guidelines</a> for contributing to the CF conventions
 
     <h2><a href="./conventions_contributors.html">List of contributors</a> to CF conventions</h2>
 
